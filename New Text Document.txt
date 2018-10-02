@@ -1,0 +1,43 @@
+cd Desktop\sc_repo\hashcat-4.2.1
+
+
+hashcat64 -m 500 -w 3 -a 0 -O -o h1_cracked_s2 h_1_md5crypt U:\Desktop\wordList\realuniq.lst
+hashcat64 -m 1500 -w 3 -a 0 -O -o h3_cracked_s2 h_3_descrypt U:\Desktop\wordList\realuniq.lst
+hashcat64 -m 1800 -w 3 -a 0 -O -o h5_cracked_s2 h_5_sha512crypt U:\Desktop\wordList\realuniq.lst
+hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6_sha_256crypt U:\Desktop\wordList\realuniq.lst
+
+hashcat64 -m xxx -w 3 -a 0 -O -o h4_cracked_s2 h_4_argon U:\Desktop\wordList\realuniq.lst
+hashcat64 -m 12800 -w 3 -a 0 -O -o h2_cracked_s2 h_2_PBKDF2_HMAC_SHA256 U:\Desktop\wordList\realuniq.lst
+
+
+hashcat64 -m 500 -w 3 -a 0 -O -o h1_cracked_s2 h_1_md5crypt U:\Desktop\wordList\rock_u\rockyou.txt
+hashcat64 -m 1500 -w 3 -a 0 -O -o h3_cracked_s2 h_3_descrypt U:\Desktop\wordList\rock_u\rockyou.txt
+hashcat64 -m 1800 -w 3 -a 0 -O -o h5_cracked_s2 h_5_sha512crypt U:\Desktop\wordList\rock_u\rockyou.txt
+hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6_sha_256crypt U:\Desktop\wordList\rock_u\rockyou.txt
+
+hashcat64 -m xxx -w 3 -a 0 -O -o h4_cracked_s2 h_4_argon U:\Desktop\wordList\realuniq.lst
+hashcat64 -m 12800 -w 3 -a 0 -O -o h2_cracked_s2 h_2_PBKDF2_HMAC_SHA256 U:\Desktop\wordList\realuniq.lst
+
+wordList\rock_u
+
+
+
+cd Desktop\temp\john180j1w1\run
+cd Desktop\temp\john180j1w2\run
+cd Desktop\temp\john180j1w3\run
+cd Desktop\temp\john180j1w4\run
+cd Desktop\temp\john180j1w5\run
+cd Desktop\temp\john180j1w6\run
+cd Desktop\temp\john180j1w7\run
+cd Desktop\temp\john180j1w8\run
+cd Desktop\temp\john180j1w9\run
+cd Desktop\temp\john180j1w10\run
+cd Desktop\temp\john180j1w11\run
+cd Desktop\temp\john180j1w12\run
+
+
+
+john h --wordlist=words
+
+
+
