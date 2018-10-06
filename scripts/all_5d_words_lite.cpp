@@ -58,7 +58,7 @@ int main(void)
 							double progress = count * 100.0 / totalCombo;
 							cout<<"Progress = "<<progress<<"%"<<endl;
 							string outputfile = 
-							"D:\\cygwin64\\home\\sahus\\5d_words";
+							"C:\\cygwin64\\home\\5d_words";
 							ofstream outfile;
 							outfile.open(outputfile, std::ios_base::app);
 							outfile << data;
@@ -74,7 +74,7 @@ int main(void)
 	{
 		cout<<"Progress = "<<100<<"%"<<endl;
 		string outputfile = 
-		"D:\\cygwin64\\home\\sahus\\5d_words";
+		"C:\\cygwin64\\home\\5d_words";
 		ofstream outfile;
 		outfile.open(outputfile, std::ios_base::app);
 		outfile << data;

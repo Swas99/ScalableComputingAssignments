@@ -1,0 +1,24 @@
+Open instance: 
+putty.exe vm-34-254-113-93.rosettavm.com -P 22 -l ubuntu -i private-keys-m-3eee13fa-c459-414e-a3a2-0440798883e1-0.ppk
+
+File transfer:
+pscp -i private-keys-m-3eee13fa-c459-414e-a3a2-0440798883e1-0.ppk NVIDIA-Linux-x86_64-367.128.run ubuntu@vm-34-254-113-93.rosettavm.com:/home/ubuntu
+
+
+
+sudo apt update
+sudo apt upgrade
+sudo apt-get install build-essential
+sudo apt-get install linux-image-extra-virtual
+
+sudo /bin/bash NVIDIA-Linux-x86_64-367.128.run
+
+
+sudo apt install hashcat
+hashcat -I
+
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock
+
+hashcat -m 0 bfield.hash /usr/share/wordlists/rockyou.txt -r rules --debug-mode=1 --debug-file=matched.rule
