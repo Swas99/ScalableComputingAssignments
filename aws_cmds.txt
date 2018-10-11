@@ -22,3 +22,9 @@ sudo rm /var/cache/apt/archives/lock
 sudo rm /var/lib/dpkg/lock
 
 hashcat -m 0 bfield.hash /usr/share/wordlists/rockyou.txt -r rules --debug-mode=1 --debug-file=matched.rule
+
+
+hashcat64 -m 500 -w 3 -a 0 -O -o h1_cracked_s2 h_1 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
+hashcat64 -m 1500 -w 3 -a 0 -O -o h3_cracked_s2 h_3 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
+hashcat64 -m 1800 -w 3 -a 0 -O -o h5_cracked_s2 h_5 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
+hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
