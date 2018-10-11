@@ -28,3 +28,35 @@ hashcat64 -m 500 -w 3 -a 0 -O -o h1_cracked_s2 h_1 _new -r h_rules --debug-mode=
 hashcat64 -m 1500 -w 3 -a 0 -O -o h3_cracked_s2 h_3 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
 hashcat64 -m 1800 -w 3 -a 0 -O -o h5_cracked_s2 h_5 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
 hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
+
+
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 ?l?l?l?l?l 
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 ?l?l?l?l?l 
+./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 ?l?l?l?l?l 
+./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 ?l?l?l?l?l 
+
+
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 ?l?l?l?l?d?d 
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 ?l?l?l?l?d?d
+./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 ?l?l?l?l?d?d
+./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 ?l?l?l?l?d?d
+
+
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 ?u?l?l?l?d?d
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 ?u?l?l?l?d?d
+./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 ?u?l?l?l?d?d
+./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 ?u?l?l?l?d?d
+
+
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 -1 aieourtnslcudAE -2 1234567890 ?1?1?1?1?1?1?2
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 -1 aieourtnslcudAE -2 1234567890 ?1?1?1?1?1?1?2
+./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 -1 aieourtnslcudAE -2 1234567890 ?1?1?1?1?1?1?2
+./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 -1 aieourtnslcudAE -2 1234567890 ?1?1?1?1?1?1?2
+
+
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 -1 aieourtnslcudAE ?1?1?1?1?1?1
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 -1 aieourtnslcudAE ?1?1?1?1?1?1
+./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 -1 aieourtnslcudAE ?1?1?1?1?1?1
+./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 -1 aieourtnslcudAE ?1?1?1?1?1?1
+
+
