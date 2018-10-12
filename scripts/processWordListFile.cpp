@@ -67,14 +67,34 @@ int main(void)
 	long long totalHashes = 0;
 	vector<string> only_hashes =  vector<string>();
 	vector<string> words =  vector<string>();
-	string rawFilesPath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\rockyou.txt";
-	string outputFile = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\_new"; 
-    string chars[] = {
-    	"!", "#", "$", "&", "(", ".", "/", "?", "@", "_",
-        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-        "A", "B", "C", "E", "G", "H", "I", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "Y", 
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
-	
+	long long wordsInRealUnix = 1212356397;
+	string rawFilesPath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\realuniq.lst";
+	string outputFile = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\_realuniq_9d";
+	// string rawFilesPath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\passdb.txt"; 
+	// string outputFile = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\wordlist\\_passdb_7d"; 
+    // string chars[] = {
+    // 	"!", "#", "$", "&", "(", ".", "/", "?", "@", "_", " ",
+    //     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    //     "A", "B", "C", "E", "G", "H", "I", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "Y", 
+    //     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+	char special[] = {
+		'B', 'E', 'G', 'H', 'I', 'K', 'M', 'N', 'P', 'R', 'S', 'T', 'U', 'V', 'Y', 
+		'!', '#', '$', '&', '(', '.', '/',  '?', '@', '_', ' ' 
+	};
+
+	char chars[] = { 
+		'!', '#', '$', '&', '(', '.', '/',  '?', '@', '_', ' ',
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+	}; 
+
+	int charHash[299];
+	for(int i =0; i<299; i++)
+		charHash[i] = 0;
+	for(char x : chars)
+		charHash[x] = 99;
+
 	string fPath = rawFilesPath;
 	fstream file(fPath);
 	long lineNumber = 0;
@@ -89,10 +109,39 @@ int main(void)
 		replaceAll( str, "\r", "");
 
 		bool found = (std::find(words.begin(), words.end(), str) != words.end());
-		bool found2 = 0;
-		for(int i = 0; i<(sizeof(chars)/sizeof(*chars)); i++)
-			found2 |= (std::find(std::begin(chars), std::end(chars), chars[i])) != std::end(chars);
-		if(found || !found2 || str.length()>9)
+		bool invalid = false;
+		int charCount[299];
+		for(int i =0; i<299; i++)
+			charCount[i] = 0;
+		for(int i = 0; i<str.length(); i++)
+		{
+			if(charHash[str[i]] != 99)
+			{
+				invalid = true;
+				break;
+			}
+			charCount[str[i]]++;
+		}
+		if(invalid)
+			continue;
+
+		charCount['a'] = 0;
+		for(char x : special)
+		{
+			// if(count(str.begin(), str.end(), x)>2)
+			if(charCount[x]>2)
+			{
+				invalid = true;
+				break;
+			}
+			charCount['a'] += charCount[x];
+		}
+		if(charCount['a']>3)
+			invalid = true;
+
+
+
+		if(found || invalid || str.length()!=9) 
 			continue;
 
 		totalHashes++;

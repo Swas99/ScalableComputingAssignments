@@ -1,11 +1,30 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include <string.h>
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fstream>
+#include <sstream>
+#include <iterator>
+#include <iostream>
 #include <algorithm>
+#include <dirent.h>
 using namespace std;
 
+template<typename Out>
 
+void split(const std::string &s, char delim, Out result) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        *(result++) = item;
+    }
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
 
 void replaceAll(std::string& source, const std::string& from, const std::string& to)
 {
@@ -28,67 +47,162 @@ void replaceAll(std::string& source, const std::string& from, const std::string&
     source.swap(newString);
 }
 
+struct mySorter
+{
+    inline bool operator() (const string& s1, const string& s2)
+    {
+    	// if(s1.length() == s2.length())
+    	// 	return s1.compare(s2);
+    	return s1.length() < s2.length();
+    }
+};
+
 /* Driver program to test above function */
 int main(void) 
 { 
 
-	string files[] = 
-	{ 
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w2\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w3\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w4\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w5\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w6\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w7\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w8\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w9\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w10\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w11\\run\\john.pot",
-		"C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\john180j1w12\\run\\john.pot"
-		
-	};
-    // std::ifstream file("C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\passdb.txt");
-
-	std::string str = "";
+	string str = "";
 	string data = "";
-	vector<string> cracked_hashes =  vector<string>();
-	int len = sizeof(files)/sizeof(*files);
 	int row_counter = 0;
-	for(int i = 0; i< len; i++)
-	{
-		fstream file(files[i]);
-		int filenumber = 1;
+	int totalHashes = 0;
+	string desDiscard = "";
+	vector<string> only_hashes =  vector<string>();
+	vector<string> cracked_hashes =  vector<string>();
+	string rawFilesPath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\2_cracked_raw";
+	string uncrackedPath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\2_uncracked_hashes";
+    string singleFilePath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\2_cracked_single_file\\2.broken";
+    string onlyPassFilePath = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\2_cracked_single_file\\onlyPass";
+    string allCharInPassFile = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\2_cracked_single_file\\allChars";
+
+	DIR *dir;
+	struct dirent *ent; 
+	dir = opendir (rawFilesPath.c_str());
+   	while ((ent = readdir (dir)) != NULL)
+    {
+    	string fPath = rawFilesPath + "\\" + ent->d_name;
+		fstream file(fPath);
+		int lineNumber = 0;
 	    while(std::getline(file, str))
 	    {
 	    	if(str.length() == 0)
 	    		continue;
-	    	
-    		bool found = (std::find(cracked_hashes.begin(), cracked_hashes.end(), str) != cracked_hashes.end());
-    		if(found)
-    			continue;
-
-    		cracked_hashes.push_back(str);
+    		
+	    	lineNumber++;
+	    	replaceAll( str, "\n", "");
+    		replaceAll( str, "\r", "");
     		replaceAll( str, ":", " ");
-            data +=  str + "\n";
-    		// data += str + "\n";
-            row_counter++; 
-        //     if (row_counter > 100000) 
-        //     {   
-        //        		row_counter = 0;
-        //        		string name = "C:\\cygwin64\\home\\Swastik\\data\\file_" + to_string(filenumber);
-        //            	std::ofstream out(name);
-        //             out << data;
-					// out.close();
-					// data = "";
-					// cout<<filenumber++<<endl;
-        //     }
+			string hashString = str.substr(0, str.find(" "));
+			if(hashString.length() == 13)
+			{
+				int passwordLength = str.length() - str.find(" ") - 1;
+				if(passwordLength>7)
+				{
+					desDiscard = str.substr(str.length()-1, 1);
+					str = str.substr(0, str.length()-1);
+				}
+			}
+			bool found = (std::find(cracked_hashes.begin(), cracked_hashes.end(), str) != cracked_hashes.end());
+			if(found)
+				continue;
+			totalHashes++;
+			only_hashes.push_back(hashString);
+            cracked_hashes.push_back(str);
 	    }
-	}    
-	string name = "C:\\Users\\Swastik\\Desktop\\MastersDegree_CS\\Semester_1\\ScalableComputing\\Stefen\\Assignments\\hashes.broken";
-   	std::ofstream out(name);
+	    // cout<<"\nFile: "<<ent->d_name<<"\n#lines="<<lineNumber<<endl;
+    }
+  	closedir (dir);
+	
+	cout<<"\nTotal cracked= "<<cracked_hashes.size()<<" == "<<totalHashes<<endl<<endl;
+	std::sort(cracked_hashes.begin(), cracked_hashes.end(),mySorter()); 
+	std::sort(cracked_hashes.begin(), cracked_hashes.end());
+	std::sort(cracked_hashes.begin(), cracked_hashes.end(),mySorter()); 
+	for(string x : cracked_hashes)
+		data += x + "\n";
+   	std::ofstream out(singleFilePath);
     out << data;
 	out.close();
-	cout<<data<<endl<<row_counter<<endl;
+
+
+	vector<string> passList  =  vector<string>();
+	for(string x : cracked_hashes)
+		passList.push_back(x.substr(x.find(" ")+1));
+	std::sort(passList.begin(), passList.end(),mySorter()); 
+	std::sort(passList.begin(), passList.end());
+	std::sort(passList.begin(), passList.end(),mySorter()); 	
+	data = "";
+	for(string x : passList)
+		data += x + "\n";
+	std::ofstream out2(onlyPassFilePath);
+    out2 << data;
+	out2.close();
+
+	int charMap[499];
+	passList.push_back(desDiscard);
+	for(int i = 0; i<499; i++)
+		charMap[i] = 0;
+	for(string x : passList)
+		for(int i = 0; i<x.length(); i++)
+			charMap[x[i]]++;
+	string allChars = "";
+	for(int i =0; i<499; i++)
+		if(charMap[i] >0)
+		{
+			char x = i;
+			allChars += "'" + string(1, x) + "', "; 
+		}
+	allChars += "\n\n\n\n\n";
+	for(int i =0; i<499; i++)
+		if(charMap[i] >0)
+		{
+			char x = i;
+			allChars +=  string(1, x) + " : " + to_string(charMap[i]) + "\n"; 
+		}
+	std::ofstream out3(allCharInPassFile);
+    out3 << allChars;
+	out3.close();
+	
+
+
+	dir = opendir (uncrackedPath.c_str()); 
+   	while ((ent = readdir (dir)) != NULL)
+    {
+		vector<string> raw_hashes =  vector<string>();
+    	string fPath = uncrackedPath + "\\" + ent->d_name;
+		fstream file(fPath);
+		int hashCount = 0;
+		int lineNumber = 0;
+		data = "";
+	    while(std::getline(file, str))
+	    {
+	    	if(str.length() == 0)
+	    		continue;
+    		
+	    	lineNumber++;
+	    	replaceAll( str, "\n", "");
+    		replaceAll( str, "\r", "");
+			bool found = (std::find(raw_hashes.begin(), raw_hashes.end(), str) != raw_hashes.end());
+			bool found2 = (std::find(only_hashes.begin(), only_hashes.end(), str) != only_hashes.end());
+			if(found || found2)
+				continue;
+			hashCount++; 
+            raw_hashes.push_back(str);
+	    }
+
+	    if(lineNumber == 0)
+	    	continue;
+		std::sort(raw_hashes.begin(), raw_hashes.end(),mySorter()); 
+		std::sort(raw_hashes.begin(), raw_hashes.end());
+		std::sort(raw_hashes.begin(), raw_hashes.end(),mySorter()); 
+		for(string x : raw_hashes)
+			data += x + "\n"; 
+		// cout<<data<<endl;
+	    cout<<"File: "<<ent->d_name<<endl;
+	    cout<<"Current Count/Previous Count = "<<hashCount<<"/"<<lineNumber<<endl<<endl;
+	    std::ofstream out(fPath);
+	    out << data;
+		out.close();
+    }
+  	closedir (dir);
+	
    return 0; 
 } 

@@ -2,7 +2,7 @@ Open instance:
 putty.exe vm-34-254-113-93.rosettavm.com -P 22 -l ubuntu -i private-keys-m-3eee13fa-c459-414e-a3a2-0440798883e1-0.ppk
 
 File transfer:
-pscp -i private-keys-m-3eee13fa-c459-414e-a3a2-0440798883e1-0.ppk NVIDIA-Linux-x86_64-367.128.run ubuntu@vm-34-254-113-93.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk NVIDIA-Linux-x86_64-367.128.run ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
 
 
 
@@ -21,7 +21,49 @@ sudo rm /var/lib/apt/lists/lock
 sudo rm /var/cache/apt/archives/lock
 sudo rm /var/lib/dpkg/lock
 
-hashcat -m 0 bfield.hash /usr/share/wordlists/rockyou.txt -r rules --debug-mode=1 --debug-file=matched.rule
+
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_3 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_1 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_2 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_4 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_5 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_6 ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_1 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_2 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_3 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_4 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_5 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk h_6 ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+
+
+pscp -i private-keys-m-d6f7b9c9-c43e-4d59-acad-5067a51c9546-0.ppk _passdb_6d_filtered ubuntu@vm-34-244-105-238.rosettavm.com:/home/ubuntu
+
+ 
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk _realuniq_7d ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk _realuniq_8d ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk _realuniq_9d ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+
+
+pscp -i private-keys-m-8de79971-3a25-42a8-862f-a4c60bf2a759-0.ppk h_rules ubuntu@vm-34-244-122-121.rosettavm.com:/home/ubuntu
+
+
+hashcat -m 500 h_1 4d_5d_w -r h_rules --debug-mode=1 --debug-file=matched.rule -O -w 3
+
+
+hashcat -m 1500 -w 3 -a 0 -O -o c3 h_3 _realuniq_9d
+hashcat -m 500 -w 3 -a 0 -O -o c1 h_1 _realuniq_9d
+
+
+hashcat -m 500 -w 3 -a 0 -O -o c1 h_1 _realuniq_8d
+
+hashcat -m 1800 -w 3 -a 0 -O -o c5 h_5 _realuniq_6d_filtered
+hashcat -m 7400 -w 3 -a 0 -O -o c6 h_6 _realuniq_6d_filtered
+
+hashcat -m 500 -w 3 -a 0 -O -o h1_cracked_s1 h_1 _passdb_6d_filtered
+hashcat -m 1500 -w 3 -a 0 -O -o h3_cracked_s1 h_3 _passdb_6d_filtered
+hashcat -m 1800 -w 3 -a 0 -O -o h5_cracked_s1 h_5 _passdb_6d_filtered
+hashcat -m 7400 -w 3 -a 0 -O -o h6_cracked_s1 h_6 _passdb_6d_filtered
 
 
 hashcat64 -m 500 -w 3 -a 0 -O -o h1_cracked_s2 h_1 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
@@ -29,9 +71,8 @@ hashcat64 -m 1500 -w 3 -a 0 -O -o h3_cracked_s2 h_3 _new -r h_rules --debug-mode
 hashcat64 -m 1800 -w 3 -a 0 -O -o h5_cracked_s2 h_5 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
 hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6 _new -r h_rules --debug-mode=1 --debug-file=matched.rule
 
-
-./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 ?l?l?l?l?l 
-./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 ?l?l?l?l?l 
+./hashcat -m 500 -w 3 -a 3 -O -o h1_cracked_s1 h_1 ?d?d?d?d?d?d
+./hashcat -m 1500 -w 3 -a 3 -O -o h3_cracked_s1 h_3 ?d?d?d?d?d?d
 ./hashcat -m 1800 -w 3 -a 3 -O -o h5_cracked_s1 h_5 ?l?l?l?l?l 
 ./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 ?l?l?l?l?l 
 
@@ -60,3 +101,4 @@ hashcat64 -m 7400 -w 3 -a 0 -O -o h6_cracked_s2 h_6 _new -r h_rules --debug-mode
 ./hashcat -m 7400 -w 3 -a 3 -O -o h6_cracked_s1 h_6 -1 aieourtnslcudAE ?1?1?1?1?1?1
 
 
+hashcat -m 1500 -w 3 -a 1 -o h3_cracked_s5 h_3 _passdb_6d_filtered _passdb_6d_filtered
